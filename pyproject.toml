@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "one-cent-outcomes"
+version = "0.2.0"
+description = "Server-owned catalog for free public-test Outcome Skills"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.141.1,<0.142",
+    "uvicorn>=0.52,<0.53",
+    "httpx2>=2.9,<3",
+    "pydantic>=2,<3",
+    "PyYAML>=6,<7",
+    "x402[fastapi,evm]==2.17.0",
+    "cryptography==50.0.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.setuptools.packages.find]
+include = ["gateway*"]

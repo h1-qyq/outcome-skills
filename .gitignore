@@ -1,0 +1,16 @@
+.worktrees/
+.superpowers/
+work/
+outputs/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+.env
+*.db
+*.sqlite3
