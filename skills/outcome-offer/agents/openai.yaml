@@ -1,0 +1,4 @@
+interface:
+  display_name: "Outcome Offer"
+  short_description: "Turn a rough service into a free, ready-to-use offer during public testing"
+  default_prompt: "Use $outcome-offer to quote and fulfill a concrete offer card from my product or service description."
