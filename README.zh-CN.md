@@ -2,185 +2,142 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-## 一段输入，一份成品交付。
+一段输入，一份成品交付。
 
-**免费公测：直接获得一份可立即使用的销售资产。**
+免费公测：直接获得一份可以立即使用的销售资产。
 
-**无需提示词工程。无需订阅。**
+三个可独立安装的 Skill，把销售上下文整理成边界明确、可审阅的交付物。
+仓库同时提供一个小型网关和仅监听回环地址的演示；仓库本身不提供托管好的公网
+服务地址。
 
-这不是又一套提示词包。把一段可用的业务描述、已验证结果或真实的客户异议，
-变成一份边界清晰、可审阅的销售资产，当前处于免费公测阶段。
+## 仓库包含什么
 
-> **把你提供的销售上下文转成一份命名明确、可审阅的交付物；
-> 来源、假设与边界均清晰可见。**
+公开范围固定为三个彼此独立的 Skill：
 
-- **测试交付物，而不是订阅。** 公测期间不收费、不接钱包，也不需要商户账号。
-- **你的事实不丢失。** 输入中的数字、日期、名称、单位与原话均可追溯；
-  未知信息继续保持显式标注。
-- **一次获得可用初稿。** 合格输入会得到一份结构明确的交付物，而不是调查问卷
-  或通用提示词库。
+| Skill | 适用场景 | 网关返回 |
+| --- | --- | --- |
+| `outcome-offer` | 粗略的服务、产品、受众或问题 | 报价卡 |
+| `proof-pack` | 已验证的结果、指标、笔记或原始证言 | 证据包 |
+| `reply-to-close` | 一条客户异议和产品上下文 | 有依据的下一步回复 |
 
-## 三种交付物
+报价卡包含成果表述、产品名、客户、购买时机、交付内容、利益点、风险逆转、标题
+和可直接粘贴的销售段落。证据包包含证明标题、提案简介、案例故事、三条证据、社媒
+文案、销售对话版本、溯源、缺失证据和质量检查。推进成交回复包含主回复、短回复、
+异议分类、一个下一步、假设与溯源说明以及质量检查。
 
-公开 Skill 恰好只有三个。公测期间三者均免费。
+交付合同由服务端维护。缺失事实会继续标为未知或假设；这些 Skill 不承诺收入、
+转化、会议、购买或成交。`examples/` 中的三个文件是受控演示输出，不是客户案例。
 
-### 成果型报价卡（`outcome-offer`）
+## 当前状态
 
-**把模糊服务包装成可销售的报价卡。**
+当前版本用于免费公测。仓库内的演示不收费，也不需要钱包、商户账号、支付证明或
+支付凭证。美元和人民币支付适配器作为未来运营配置的接口保留，但目前没有启用；
+人民币/京东入驻也没有配置。
 
-**公测期间免费。**
+仓库没有托管好的网关 URL。真正部署还需要运营方自己的组合入口、受保护的输入存储、
+结果引擎和部署密钥。SQLite 输入存储和固定结果引擎只是本地演示组件，不是生产设施。
+参见 [部署说明](docs/deploy.md) 和 [未来支付说明](docs/activate-live-payments.md)。
 
-- **适合输入：** 一个想法、服务、产品、目标客户或粗略问题。
-- **你将获得：** 一个从现状到目标的成果表述、产品名、目标客户与购买时机、
-  交付内容、三条结果导向利益点、风险逆转、三个标题和一段可直接粘贴的销售文案。
-- **交付合同：** 具体到无需再开策略会即可交给文案人员；缺失的业务事实会标为
-  假设或未确认字段。
-- **不应暗示：** 收入、线索、转化或成交结果。
-- **受控示例：** [两天交付的 Notion 客户系统](examples/outcome-offer.md)，
-  来自不发生资金流转的演示样例。
-
-### 证据包（`proof-pack`）
-
-**把已验证结果整理为可用于销售的证据。**
-
-**公测期间免费。**
-
-- **适合输入：** 已验证的客户结果、指标、笔记或原始证言。
-- **你将获得：** 一个证明标题、两句提案简介、120–180 词案例故事（或同等简洁的
-  本地语言版本）、恰好三条证据要点、一条社媒文案、一版销售对话表述、主张溯源、
-  缺失证据和质量检查。
-- **交付合同：** 输入中的数字与原话保持可追溯；计算会标为 `Derived` 并保留
-  原始数字；缺失证据不会被掩盖。
-- **不应暗示：** 因果关系、运营影响、转化、销售或收入影响。
-- **受控示例：** [WhatsApp 到店提醒证据](examples/proof-pack.md)，
-  来自不发生资金流转的演示样例。
-
-### 推进成交回复（`reply-to-close`）
-
-**把一条真实异议变成有依据的下一步回复。**
-
-**公测期间免费。**
-
-- **适合输入：** 一条客户主动发来的消息或异议，加上已有的产品或报价上下文。
-- **你将获得：** 一条不超过 90 词（或本地语言等效长度）的主回复、一条不超过
-  40 词的短回复、异议分类、一个共同的低摩擦下一步、假设与溯源说明以及质量检查。
-- **交付合同：** 回复只推进一个低摩擦的下一步，并保留输入中的原话、数字、
-  日期与引述。
-- **不应暗示：** 折扣、试用、退款、功能、保证、会议、预约、购买或成交。
-  它只适用于真实的客户主动咨询，不用于冷启动群发。
-- **受控示例：** [小店价格异议回复](examples/reply-to-close.md)，
-  来自不发生资金流转的演示样例。
-
-## 免费公测边界
-
-**直接运行一次免费测试；网关为该订单生成命名交付物，并用私有访问令牌保护结果。**
-
-| 状态 | 当前边界 |
-| --- | --- |
-| 免费公测 | **免费。不发生支付、钱包、商户账号或资金流转。** |
-| 美元未来路径 | **暂未启用；未来需要收款方和经过认证的 facilitator。** |
-| 京东/人民币未来路径 | **暂缓；没有京东入驻、钱包、凭证或人民币收款配置。** |
-| 结果访问 | **每笔公测订单使用私有访问令牌保护。** |
-
-本仓库没有声称已有钱包、支付集成、京东集成或商户入驻。未来收款工作不在本次
-公测范围内。
-
-## 快速开始
+## 安装 Skill
 
 需要 Python 3.11 或更高版本。
 
-```text
+```powershell
 python -m pip install -e .
 python scripts/install.py --target codex --scope project --dry-run
 python scripts/install.py --target codex --scope project
 ```
 
-安装器可以复制三个完整 Skill 目录，也可以只复制其中一个独立 Skill。
-默认拒绝覆盖同名目录；只有显式加入 `--force` 才会替换。执行强制替换前应先运行
+安装器会复制完整的 Skill 目录。使用 `--skill` 可只选择一个 Skill；重复该选项可以
+选择多个。默认不会覆盖同名目录，只有显式传入 `--force` 才会替换；强制替换前先运行
 `--dry-run`。
 
-| 宿主 | 项目/工作区范围 | 用户范围 | 验证方式 |
-| --- | --- | --- | --- |
-| Codex | `.agents/skills` | `~/.agents/skills` | 打开 `/skills` 或调用 `$outcome-offer`；当前规范位置是 `.agents/skills`。 |
-| JoyCode | `.joycode/skills` | `~/.joycode/skills` | 在 Settings → Skills 中检查范围与路径；不声称 JoyCode 识别 `agents/openai.yaml`。 |
-| OpenClaw | `skills/` | `~/.openclaw/skills` | 若本仓库就是当前工作区，顶层 `skills/` 已会被发现，因此无需复制。 |
+支持的安装目标和目录约定如下：
 
-选择其他宿主或用户范围时应显式指定：
+| 目标 | 项目范围 | 用户范围 |
+| --- | --- | --- |
+| `codex` | `.agents/skills` | `~/.agents/skills` |
+| `joycode` | `.joycode/skills` | `~/.joycode/skills` |
+| `openclaw` | `skills/` | `~/.openclaw/skills` |
 
-```text
+这些是安装器的目标目录；宿主是否会发现目录，由宿主自身决定。仓库的 `skills/` 是
+唯一安装来源。必须复制整个 Skill 目录，其中包含客户端和引用资料。
+
+示例：
+
+```powershell
 python scripts/install.py --target joycode --scope user --dry-run
-python scripts/install.py --target openclaw --scope project --project-root /path/to/workspace --dry-run
-# 只安装一个独立 Skill：
+python scripts/install.py --target openclaw --scope project `
+  --project-root C:\workspace --dry-run
 python scripts/install.py --target codex --scope project --skill proof-pack
 ```
 
-本仓库的 `skills/` 是唯一安装来源。必须复制完整目录，不能只复制 `SKILL.md`；
-客户端、引用资料和可选 Codex 元数据都是可移植目录的一部分。部署前检查见
-[docs/deploy.md](docs/deploy.md)。
+带有 `v*` 标签的版本会通过[发布工作流](.github/workflows/release.yml)为每个 Skill
+发布一个独立压缩包。
 
-带有 `v*` 标签的版本会通过仓库发布工作流，为每个 Skill 发布一个独立压缩包。
+## 运行本地免费演示
 
-## 运行受控演示
+演示只监听回环地址，使用仓库目录之外的临时存储，进程退出后清理。它使用确定性的
+固定结果引擎，不调用模型，也不发生资金流转。
 
-本地演示只验证免费公测访问、订单授权与结果交付，不转移资金；它不是真实结账，
-也不能证明钱包或商户已开通。
+终端 1：
 
-```text
-python -m pytest tests/test_api.py tests/test_demo_payment.py -q
+```powershell
+python scripts/run_demo_gateway.py --port 8000
 ```
 
-上方三个示例均为受控的免费公测样例，不涉及支付，也不需要模拟凭证。
+终端 2：把买家输入通过 UTF-8 标准输入传递，并设置回环网关地址：
 
-## 交付物保护什么
-
-- 服务端目录固定产品名与公开交付合同。
-- 幂等键绑定规范化输入、产品、币种与语言，不能被静默复用到另一笔购买。
-- Proof Pack 保留数字和原话的溯源，并标出派生计算。
-- Outcome Offer 不会把缺失条款编造成事实。
-- Reply to Close 只推进一个下一步，不编造商务让步。
-- 公测输出由私有结果访问令牌保护。
-
-## 我们不承诺什么
-
-**我们保证的是写明的交付物，而不是外部商业结果。**
-
-- 不保证收入、线索、转化、预约、会议、购买或成交。
-- 不保证无需人工审阅即可达到品牌发布标准或事实完整。
-- 不编造缺失证据、条款、折扣、功能、证言、保证或因果主张。
-- 不承诺支付集成、钱包开通或商户入驻。
-- 公测不是真实支付、真实结账或开通证明。
-
-## 安全与隐私边界
-
-```text
-可移植 Skill -> 网关 -> 服务端产品目录 -> 支付适配器
-                                      |-> 已验证结果引擎
+```powershell
+$env:OUTCOMES_GATEWAY_URL = "http://127.0.0.1:8000"
+Get-Content -Raw -Encoding utf8 .\buyer-input.txt |
+  python skills\outcome-offer\scripts\client.py quote --input-stdin `
+    --currency USD --locale en-US --idempotency-key "demo-001"
+python skills\outcome-offer\scripts\client.py status --order-id "<ORDER_ID>"
+python skills\outcome-offer\scripts\client.py fulfill --order-id "<ORDER_ID>"
 ```
 
-Skill 收集最小可用输入并调用网关；网关拥有订单状态与结果访问控制；未来支付适配器
-在本次公测中不启用，结果引擎只读取与该订单完整性校验一致的输入。
+`quote` 会打印访问模式和订单号。访问令牌保存在客户端的私有本地状态中，后续状态和
+结果请求由客户端自动发送；令牌不会作为公开交付物输出。返回结果由固定引擎生成。
+部署到网关时，客户端要求精确的 HTTPS 源站，并拒绝凭据、查询参数、片段和重定向；
+私有输入仍应通过标准输入传递。运营方预检见 [docs/deploy.md](docs/deploy.md)。
 
-不得在公开响应中打印、记录或序列化私钥、认证服务商细节、SM4 密钥、原始支付凭证、
-支付证明或买家输入。`.env.example` 只包含变量名和明显无效的示例值；本次公测不接收
-支付凭证。参见 [SECURITY.md](SECURITY.md) 与 [未来支付启用记录](docs/activate-live-payments.md)。
+三个受控示例：
 
-## 测试与验证
+- [Outcome Offer](examples/outcome-offer.md)
+- [Proof Pack](examples/proof-pack.md)
+- [Reply to Close](examples/reply-to-close.md)
 
-```text
+## 开发与测试
+
+安装项目和测试依赖后运行仓库检查：
+
+```powershell
+python -m pip install -e . pytest
 python -m pytest -q
 python scripts/validate_repo.py
-git diff --check
 ```
 
-仓库验证器会在无网络条件下检查恰好三个 Skill、插件清单、可移植文件、
-官方兼容的快速验证、示例结构、发布文案以及敏感值/路径卫生。
+验证器在不发起网络请求的情况下检查三个 Skill 的固定范围、可移植文件、示例、发布
+副本、插件清单以及敏感值/路径卫生。`git diff --check` 可作为本地改动的额外检查。
 
-## 项目治理
+仓库没有预先组合好的生产 ASGI 启动命令。组合部署前请阅读 [docs/deploy.md](docs/deploy.md)，
+不要把演示脚本当作生产服务运行。
 
-- [贡献指南](CONTRIBUTING.md)
-- [安全策略](SECURITY.md)
-- [行为准则](CODE_OF_CONDUCT.md)
-- [MIT 许可证](LICENSE)
+## 目录说明
 
-这是一个需要审阅的初稿工作流。使用前请根据原始材料以及你的法律、品牌与商务要求
-复核交付物。
+- `skills/`：三个可安装的 Skill、客户端和引用资料
+- `gateway/`：目录、订单状态、结果访问和支付适配器接口
+- `scripts/`：安装器、回环演示启动器和仓库验证器
+- `examples/`、`evals/`：受控示例与评估材料
+- `tests/`：API、客户端、支付合同、安装和验证测试
+- `docs/`：部署与未来支付说明
+
+## 安全、贡献与许可证
+
+不要提交凭证、钱包密钥、支付证明、买家输入或结果访问令牌。`.env.example` 只包含
+占位值。运行网关前请阅读 [SECURITY.md](SECURITY.md)，提交改动请参阅
+[CONTRIBUTING.md](CONTRIBUTING.md)。
+
+项目采用 [MIT 许可证](LICENSE)，行为规范见 [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)。
+
