@@ -1,0 +1,4 @@
+interface:
+  display_name: "Proof Pack"
+  short_description: "Turn verified results into a free, sales-ready proof pack during public testing"
+  default_prompt: "Use $proof-pack to quote and fulfill a proof pack from my verified result, metric, or testimonial."
