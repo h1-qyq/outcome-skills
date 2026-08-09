@@ -1,0 +1,4 @@
+interface:
+  display_name: "Reply to Close"
+  short_description: "Turn a live objection into a free, ready-to-send reply during public testing"
+  default_prompt: "Use $reply-to-close to quote and fulfill one grounded reply to this inbound objection."
