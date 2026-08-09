@@ -1,0 +1,18 @@
+{
+  "name": "outcome-skills",
+  "version": "0.2.1",
+  "description": "Outcome Skills provides three focused, product-ready deliverables during a free public test.",
+  "author": {
+    "name": "Outcome Skills"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Outcome Skills",
+    "shortDescription": "Create focused, product-ready outcomes.",
+    "longDescription": "Outcome Skills turns sales context into one named, review-ready result through three dedicated Skills.",
+    "developerName": "Outcome Skills",
+    "category": "Productivity",
+    "capabilities": [],
+    "defaultPrompt": "Help me create a focused, product-ready outcome."
+  }
+}
