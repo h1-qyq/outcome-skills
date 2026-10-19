@@ -1,163 +1,32 @@
-# Outcome Skills
+# 榆次一中 · 校媒二次传播监控
 
-[English](README.md) | [简体中文](README.zh-CN.md)
+手机优先看板：**本期（2026秋·4×100）** 与 **往期（百米出圈）** 分栏，禁止混算。
 
-One brief in. One finished result out.
+## 国内怎么打开（重要）
 
-Free public test: get one useful sales asset you can use immediately.
-No prompt engineering. No subscription.
+`beacon.host` 在国内经常打不开，**不要再依赖它发群**。优先：
 
-This repository contains three portable Skills for turning sales context into a
-defined, reviewable deliverable, plus a small gateway and a loopback demo. It
-does not provide a hosted public endpoint.
+1. **发给群_监控快照.html**（推荐）— 单文件、数据已内嵌，微信发文件 / 本机双击即可离线打开  
+2. **GitHub Pages** 或 **jsDelivr** 托管 `index.html` + `data.json`（国内可达性通常好于 beacon）  
+3. 本机 `python -m http.server` 同源打开 `index.html`
 
-## The three Skills
+## 文件
 
-The public surface is intentionally limited to three independent Skills:
+| 文件 | 作用 |
+|---|---|
+| `index.html` | 在线看板（fetch `data.json`，手动刷新） |
+| `data.json` | 条目数据（本期 40 + 往期 13） |
+| `发给群_监控快照.html` | 数据内嵌单文件，`file://` 可开 |
+| `monitor-offline.html` | 与快照同内容备份 |
 
-| Skill | Use it for | The gateway returns |
-| --- | --- | --- |
-| `outcome-offer` | Rough offer context | An offer card |
-| `proof-pack` | Verified proof context | A proof pack |
-| `reply-to-close` | One inbound objection | A next-step reply |
+## 看板能力
 
-The offer card contains a from-to outcome, product name, buyer, buying moment,
-deliverables, benefits, risk reversal, headlines, and a paste-ready sales block.
-The Proof Pack contains a headline, proposal blurb, case story, three evidence
-bullets, social copy, sales-conversation copy, traceability, missing evidence,
-and a quality check. Reply to Close contains a primary reply, a short
-alternative, one objection classification, one next step, assumptions and
-traceability, and a quality check.
+- 分段：**本期 / 往期 / 全部**；绿标本期、琥珀标往期  
+- 排序：发布时间新→旧，再按 `weight`（人民日报/央视等优先）  
+- KPI：本期数、往期数、重点账号、当前列表数  
+- 仅手动刷新按钮（**无** `setInterval` 轮询）  
+- 搜索标题/账号/平台；按平台筛选  
 
-The server owns the result contracts. Missing facts remain marked as unknown or
-assumptions; the Skills do not promise revenue, conversion, meetings, purchases,
-or closed sales. The three `examples/` files come from controlled fixtures, not
-live customer results.
+## 更新数据后重出快照
 
-## Current status
-
-This release is a free public test. The included demo does not charge money and
-does not require a wallet, merchant account, payment proof, or payment
-credential. USD and CNY payment adapters remain dormant seams for future
-operator work; CNY/JD onboarding is not configured.
-
-This repository has no hosted gateway URL. A real deployment needs an
-operator-owned composition root, a protected payload store, a result engine, and
-deployment secrets. The local SQLite payload store and fixture result engine are
-not production infrastructure. See [docs/deploy.md](docs/deploy.md) and
-[docs/activate-live-payments.md](docs/activate-live-payments.md).
-
-## Install a Skill
-
-Requires Python 3.11 or newer.
-
-```powershell
-python -m pip install -e .
-python scripts/install.py --target codex --scope project --dry-run
-python scripts/install.py --target codex --scope project
-```
-
-The installer copies complete Skill directories. Use `--skill` to select one
-Skill, and repeat it to select more than one. The installer leaves same-name
-directories alone unless you supply `--force`; run `--dry-run` before a forced
-replacement.
-
-Supported installer targets and destination conventions are:
-
-| Target | Project scope | User scope |
-| --- | --- | --- |
-| `codex` | `.agents/skills` | `~/.agents/skills` |
-| `joycode` | `.joycode/skills` | `~/.joycode/skills` |
-| `openclaw` | `skills/` | `~/.openclaw/skills` |
-
-These are installer destinations. Each host decides whether it discovers a
-directory. The repository's `skills/` tree is the installation
-source of truth; copy the whole Skill directory, including its client and
-references.
-
-Examples:
-
-```powershell
-python scripts/install.py --target joycode --scope user --dry-run
-python scripts/install.py --target openclaw --scope project `
-  --project-root C:\workspace --dry-run
-python scripts/install.py --target codex --scope project --skill proof-pack
-```
-
-Tagged `v*` releases publish one archive for each Skill through
-[the release workflow](.github/workflows/release.yml).
-
-## Run the local free demo
-
-The demo binds to loopback, uses temporary storage outside the checkout, and
-stops when the process exits. It uses the deterministic fixture result engine;
-it does not call a model or move money.
-
-In terminal 1:
-
-```powershell
-python scripts/run_demo_gateway.py --port 8000
-```
-
-In terminal 2, keep buyer input on UTF-8 stdin and set the loopback gateway URL:
-
-```powershell
-$env:OUTCOMES_GATEWAY_URL = "http://127.0.0.1:8000"
-Get-Content -Raw -Encoding utf8 .\buyer-input.txt |
-  python skills\outcome-offer\scripts\client.py quote --input-stdin `
-    --currency USD --locale en-US --idempotency-key "demo-001"
-python skills\outcome-offer\scripts\client.py status --order-id "<ORDER_ID>"
-python skills\outcome-offer\scripts\client.py fulfill --order-id "<ORDER_ID>"
-```
-
-`quote` prints an access mode and order id. The client stores the access token in
-private local state and sends it on later status/result requests; the token is
-not a public artifact. The fixture engine generates the returned result. For a
-deployed gateway, clients require an exact HTTPS origin,
-reject credentials, queries, fragments, and redirects, and still read private
-input from stdin. See [docs/deploy.md](docs/deploy.md) for the operator
-preflight.
-
-The three controlled examples are here:
-
-- [Outcome Offer](examples/outcome-offer.md)
-- [Proof Pack](examples/proof-pack.md)
-- [Reply to Close](examples/reply-to-close.md)
-
-## Development and tests
-
-Install the project and test dependency, then run the repository checks:
-
-```powershell
-python -m pip install -e . pytest
-python -m pytest -q
-python scripts/validate_repo.py
-```
-
-The validator checks the exact three-Skill surface, portable files, examples,
-release copy, plugin manifest, and secret/path hygiene without making network
-requests. `git diff --check` adds a useful local check for whitespace errors.
-
-The repository does not include a precomposed production ASGI command. Read
-[docs/deploy.md](docs/deploy.md) before composing one; do not run the demo as a
-production service.
-
-## Repository map
-
-- `skills/` — the three installable Skills and their clients/references
-- `gateway/` — catalog, order state, result access, and payment adapter seams
-- `scripts/` — installer, loopback demo runner, and repository validator
-- `examples/` and `evals/` — controlled fixtures and evaluation material
-- `tests/` — API, client, payment-contract, installation, and validation tests
-- `docs/` — deployment and future payment notes
-
-## Security, contribution, and license
-
-Do not commit credentials, wallet keys, payment proofs, buyer input, or result
-access tokens. `.env.example` contains placeholders. Review
-[SECURITY.md](SECURITY.md) before operating a gateway, and use
-[CONTRIBUTING.md](CONTRIBUTING.md) for changes.
-
-This project uses the [MIT License](LICENSE). See also the
-[Code of Conduct](CODE_OF_CONDUCT.md).
-
+改完 `data.json` 后运行 `python3 build.py`，会重新生成 index.html 和两个快照文件（模板在 `src/template.html`），然后再发群。
